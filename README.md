@@ -1,7 +1,7 @@
 # Pelykh.Common
 Common .NET library for most .NET-based projects I work on. Contains common helpers and extensions.
 
-# Library license
+# License and copyright notice
 Copyright 2015 Oleksii Pelykh
 
 Licensed under the Apache License, Version 2.0 (the "License");
