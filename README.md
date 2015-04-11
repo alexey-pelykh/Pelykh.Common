@@ -1,5 +1,5 @@
-# Pelykh.Common library
-Common .NET library for most .NET-based projects I work on. Contains common helpers and extensions.
+# Pelykh.Common libraries
+Common .NET libraries for .NET-based projects with helpers and extensions.
 
 ## License and copyright notice
 Copyright 2015 Oleksii Pelykh
