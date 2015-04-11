@@ -61,7 +61,7 @@
   </Target>
   <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets" />
   <Target Name="GenerateVersionFromGit" AfterTargets="EnsureNuGetPackageBuildImports" BeforeTargets="BeforeBuild">
-    <GitDescribe LocalPath="$(SolutionDir)">
+    <GitDescribe LocalPath="$(ProjectDir)">
       <Output TaskParameter="Tag" PropertyName="GitTag" />
       <Output TaskParameter="CommitCount" PropertyName="GitCommitCount" />
       <Output TaskParameter="CommitHash" PropertyName="GitCommitHash" />
