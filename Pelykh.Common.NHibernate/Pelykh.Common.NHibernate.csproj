@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CB6BD732-C763-42C2-990E-4F43869E69E7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Pelykh.Common.NHibernate</RootNamespace>
+    <AssemblyName>Pelykh.Common.NHibernate</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <MSBuildCommunityTasksPath>$(SolutionDir)\.build</MSBuildCommunityTasksPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FluentNHibernate, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentNHibernate.2.0.1.0\lib\net40\FluentNHibernate.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Iesi.Collections, Version=4.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHibernate.4.0.3.4000\lib\net40\NHibernate.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyFlags.cs" />
+    <Compile Include="FilteredQueryOver.cs" />
+    <Compile Include="FilteredQueryOverFilterBuilder.cs" />
+    <Compile Include="FilteredQueryOverNaturalIdFilterBuilder.cs" />
+    <Compile Include="ICriteriaExtensions.cs" />
+    <Compile Include="ICriterionExtensions.cs" />
+    <Compile Include="IFilteredQueryOver.cs" />
+    <Compile Include="IFilteredQueryOverFilterBuilder.cs" />
+    <Compile Include="IFilteredQueryOverNaturalIdFilterBuilder.cs" />
+    <Compile Include="IQueryableExtensions.cs" />
+    <Compile Include="IQueryExtensions.cs" />
+    <Compile Include="IQueryOverExtensions.cs" />
+    <Compile Include="ISessionExtensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertySubqueryExpressionExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Pelykh.Common.PCL\Pelykh.Common.PCL.csproj">
+      <Project>{8d71a604-c7b0-4029-bd29-7671e9e1a6f8}</Project>
+      <Name>Pelykh.Common.PCL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets" />
+  <Target Name="GenerateVersionFromGit" AfterTargets="EnsureNuGetPackageBuildImports" BeforeTargets="BeforeBuild">
+    <GitDescribe LocalPath="$(SolutionDir)">
+      <Output TaskParameter="Tag" PropertyName="GitTag" />
+      <Output TaskParameter="CommitCount" PropertyName="GitCommitCount" />
+      <Output TaskParameter="CommitHash" PropertyName="GitCommitHash" />
+    </GitDescribe>
+    <PropertyGroup>
+      <GitMajorMinorVersion>$([System.Text.RegularExpressions.Regex]::Match($(GitTag), "(?:\d+.?)+"))</GitMajorMinorVersion>
+    </PropertyGroup>
+    <AssemblyInfo CodeLanguage="CS" OutputFile="Properties\AssemblyInfo.cs" AssemblyTitle="Common .NET library with NHibernate helpers" AssemblyCompany="FOP Oleksii Pelykh" AssemblyProduct="" AssemblyCopyright="Copyright © Oleksii Pelykh 2015" AssemblyVersion="$(GitMajorMinorVersion).$(GitCommitCount).0" AssemblyFileVersion="$(GitMajorMinorVersion).$(GitCommitCount).0" AssemblyInformationalVersion="$(GitTag)-$(GitCommitCount)-$(GitCommitHash)" />
+  </Target>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+</Project>
