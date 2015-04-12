@@ -36,6 +36,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
+    <ProjectDir Condition=" '$(ProjectDir)' == '' ">$(MSBuildProjectDirectory)</ProjectDir>
     <MSBuildCommunityTasksPath>$(ProjectDir)\..\.build</MSBuildCommunityTasksPath>
   </PropertyGroup>
   <ItemGroup>
