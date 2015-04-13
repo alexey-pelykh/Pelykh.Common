@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pelykh.Common.NodaTime.PCL"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pelykh.Common.Web", "Pelykh.Common.Web\Pelykh.Common.Web.csproj", "{EAEAF954-EFB4-48B6-8245-88D7AEE70259}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pelykh.Common.HangFire", "Pelykh.Common.HangFire\Pelykh.Common.HangFire.csproj", "{48F30BF0-5948-483D-BE96-3D8B9CD42E83}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +67,10 @@ Global
 		{EAEAF954-EFB4-48B6-8245-88D7AEE70259}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EAEAF954-EFB4-48B6-8245-88D7AEE70259}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EAEAF954-EFB4-48B6-8245-88D7AEE70259}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48F30BF0-5948-483D-BE96-3D8B9CD42E83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48F30BF0-5948-483D-BE96-3D8B9CD42E83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48F30BF0-5948-483D-BE96-3D8B9CD42E83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48F30BF0-5948-483D-BE96-3D8B9CD42E83}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
