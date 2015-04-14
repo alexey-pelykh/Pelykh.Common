@@ -6,20 +6,39 @@ namespace Pelykh.Common
 {
     public static class Throw
     {
-        public static void IfNull<T>(Expression<Func<T>> expression)
+        public static Validator<T> If<T>(Expression<Func<T>> parameterExpression)
             where T : class
         {
-            var body = (MemberExpression)expression.Body;
-            var name = body.Member.Name;
-            var value = ((FieldInfo)body.Member).GetValue(((ConstantExpression)body.Expression).Value);
+            return new Validator<T>(parameterExpression);
+        }
 
-            if (value != null)
-                return;
+        public static void IfNull<T>(Expression<Func<T>> parameterExpression)
+            where T : class
+        {
+            new Validator<T>(parameterExpression).IsNull();
+        }
 
-            if (name != null)
+        public sealed class Validator<T>
+            where T : class
+        {
+            public Expression<Func<T>> ParameterExpression { get; set; }
+
+            public Validator(Expression<Func<T>> parameterExpression)
+            {
+                ParameterExpression = parameterExpression;
+            }
+
+            public void IsNull()
+            {
+                var body = (MemberExpression)ParameterExpression.Body;
+                var name = body.Member.Name;
+                var value = ((FieldInfo)body.Member).GetValue(((ConstantExpression)body.Expression).Value);
+
+                if (value != null)
+                    return;
+
                 throw new ArgumentNullException(name);
-
-            throw new ArgumentNullException();
+            }
         }
     }
 }
