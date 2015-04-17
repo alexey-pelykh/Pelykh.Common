@@ -51,7 +51,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyFlags.cs" />
     <Compile Include="JobsBuilder.cs" />
     <Compile Include="ManualJobAttribute.cs" />
     <Compile Include="ManualJobs.cs" />

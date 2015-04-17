@@ -44,7 +44,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyFlags.cs" />
     <Compile Include="Collections\AutoDictionary.cs" />
     <Compile Include="GenericExtensions.cs" />
     <Compile Include="ICollectionExtensions.cs" />

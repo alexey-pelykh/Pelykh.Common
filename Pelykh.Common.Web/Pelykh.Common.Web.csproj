@@ -55,7 +55,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyFlags.cs" />
     <Compile Include="Http\AutoRoutePrefixAttribute.cs" />
     <Compile Include="Http\AutoRoutePrefixMode.cs" />
     <Compile Include="Http\IRouteSuffix.cs" />

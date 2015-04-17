@@ -51,7 +51,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyFlags.cs" />
     <Compile Include="FilteredQueryOver.cs" />
     <Compile Include="FilteredQueryOverFilterBuilder.cs" />
     <Compile Include="FilteredQueryOverNaturalIdFilterBuilder.cs" />

@@ -51,7 +51,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyFlags.cs" />
     <Compile Include="NaturalIdPartExtensions.cs" />
     <Compile Include="OneToManyPartExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -40,7 +40,6 @@
     <MSBuildCommunityTasksPath>$(ProjectDir)\..\.build</MSBuildCommunityTasksPath>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AssemblyFlags.cs" />
     <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
