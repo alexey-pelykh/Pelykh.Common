@@ -28,5 +28,17 @@ namespace Pelykh.Common
 
             return IsSimpleType(type);
         }
+
+        public static bool IsConstructible(this Type type, params Type[] constructorArguments)
+        {
+            type.ThrowIfNull("this");
+
+            if (type.IsValueType)
+                return true;
+
+            return
+                !type.IsAbstract &&
+                type.GetConstructor(constructorArguments) != null;
+        }
     }
 }
