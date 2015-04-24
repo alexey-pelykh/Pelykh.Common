@@ -7,11 +7,7 @@ namespace Pelykh.Common.Reflection
     public abstract class MetadataCollector<TCollector>
         where TCollector : MetadataCollector<TCollector>
     {
-        private readonly List<Type> collectedTypes = new List<Type>();
-
-        public MetadataCollector()
-        {
-        }
+        readonly List<Type> collectedTypes = new List<Type>();
 
         public TCollector FromAssemblies(params Assembly[] assemblies)
         {

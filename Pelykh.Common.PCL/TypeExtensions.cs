@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 
 namespace Pelykh.Common
 {
@@ -28,20 +27,6 @@ namespace Pelykh.Common
                 type = underlyingType;
 
             return IsSimpleType(type);
-        }
-
-        public static bool CanConvertFromString(this Type type)
-        {
-            type.ThrowIfNull("this");
-
-            return IsSimpleUnderlyingType(type) || HasStringConverter(type);
-        }
-
-        public static bool HasStringConverter(this Type type)
-        {
-            type.ThrowIfNull("this");
-
-            return TypeDescriptor.GetConverter(type).CanConvertFrom(typeof(string));
         }
     }
 }
