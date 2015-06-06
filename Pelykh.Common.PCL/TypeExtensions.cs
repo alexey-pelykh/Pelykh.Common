@@ -40,5 +40,26 @@ namespace Pelykh.Common
                 !type.IsAbstract &&
                 type.GetConstructor(constructorArguments) != null;
         }
+
+        public static bool IsNullable(this Type type)
+        {
+            return
+                type.IsGenericType &&
+                type.GetGenericTypeDefinition() == typeof(Nullable<>);
+        }
+
+        public static Type GetNotNullableType(this Type type)
+        {
+            return type.IsNullable()
+                ? Nullable.GetUnderlyingType(type)
+                : null;
+        }
+
+        public static Type GetNotNullableTypeOrOriginal(this Type type)
+        {
+            return type.IsNullable()
+                ? Nullable.GetUnderlyingType(type)
+                : type;
+        }
     }
 }

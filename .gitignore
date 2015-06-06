@@ -8,6 +8,9 @@
 # Visual Studio solution temporary files
 /*.suo
 
+# Visual Studio solution temporary folder
+/.vs
+
 # Xamarin Studio user settings
 /*.userprefs
 
