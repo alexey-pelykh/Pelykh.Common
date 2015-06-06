@@ -10,10 +10,6 @@ namespace Pelykh.Common.Newtonsoft.Json.Converters
     /// </summary>
     public class StringAttributedEnumConverter : JsonConverter
     {
-        public StringAttributedEnumConverter()
-        {
-        }
-
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             if (value == null)
