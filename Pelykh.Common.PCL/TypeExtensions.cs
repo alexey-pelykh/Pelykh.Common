@@ -43,6 +43,8 @@ namespace Pelykh.Common
 
         public static bool IsNullable(this Type type)
         {
+            type.ThrowIfNull("this");
+
             return
                 type.IsGenericType &&
                 type.GetGenericTypeDefinition() == typeof(Nullable<>);
@@ -50,6 +52,8 @@ namespace Pelykh.Common
 
         public static Type GetNotNullableType(this Type type)
         {
+            type.ThrowIfNull("this");
+
             return type.IsNullable()
                 ? Nullable.GetUnderlyingType(type)
                 : null;
@@ -57,6 +61,8 @@ namespace Pelykh.Common
 
         public static Type GetNotNullableTypeOrOriginal(this Type type)
         {
+            type.ThrowIfNull("this");
+
             return type.IsNullable()
                 ? Nullable.GetUnderlyingType(type)
                 : type;

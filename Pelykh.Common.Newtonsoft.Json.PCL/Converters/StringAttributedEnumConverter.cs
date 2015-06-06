@@ -20,7 +20,6 @@ namespace Pelykh.Common.Newtonsoft.Json.Converters
 
             var objectType = value.GetType();
             var underlyingObjectType = objectType.GetNotNullableTypeOrOriginal();
-            var objectTypeIsNullable = (underlyingObjectType != objectType);
 
             if (!underlyingObjectType.IsEnum)
             {
