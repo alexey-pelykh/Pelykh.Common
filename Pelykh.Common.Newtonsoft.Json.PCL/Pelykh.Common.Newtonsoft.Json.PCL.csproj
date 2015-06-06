@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Converters\StringAttributedEnumConverter.cs" />
+    <Compile Include="Converters\UnixEpochDateTimeConverter.cs" />
     <Compile Include="JsonEnumValueAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
