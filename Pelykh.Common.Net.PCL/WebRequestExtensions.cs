@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -10,18 +11,41 @@ namespace Pelykh.Common.Net
         {
             webRequest.ThrowIfNull("this");
 
-            return Task.Factory.StartNew(() => Task<WebResponse>.Factory.FromAsync(
-                webRequest.BeginGetResponse,
-                webRequest.EndGetResponse,
-                null).Result);
+            var task = Task.Factory.StartNew(() => Task<WebResponse>.Factory.FromAsync(
+                    webRequest.BeginGetResponse,
+                    webRequest.EndGetResponse,
+                    null));
+            try
+            {
+                task.Wait();
+            }
+            catch (AggregateException aggregateException)
+            {
+                throw aggregateException.Flatten();
+            }
+
+            return task.Result;
         }
 
-        public static Task<Stream> Stream(this WebRequest webRequest)
+        public static Task<Stream> GetRequestStreamAsync(this WebRequest webRequest)
         {
-            return Task.Factory.StartNew(() => Task<Stream>.Factory.FromAsync(
-                webRequest.BeginGetRequestStream,
-                webRequest.EndGetRequestStream,
-                null).Result);
+            webRequest.ThrowIfNull("this");
+
+            var task = Task.Factory.StartNew(() => Task<Stream>.Factory.FromAsync(
+                    webRequest.BeginGetRequestStream,
+                    webRequest.EndGetRequestStream,
+                    null));
+
+            try
+            {
+                task.Wait();
+            }
+            catch (AggregateException aggregateException)
+            {
+                throw aggregateException.InnerException;
+            }
+
+            return task.Result;
         }
     }
 }
