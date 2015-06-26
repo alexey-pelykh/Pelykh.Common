@@ -9,21 +9,12 @@ namespace Pelykh.Common.Newtonsoft.Json.Converters
     /// </summary>
     public sealed class TimeSpanSecondsConverter : JsonConverter
     {
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override bool CanConvert(Type objectType)
         {
-            long seconds;
+            if (objectType == typeof(TimeSpan) || objectType == typeof(TimeSpan?))
+                return true;
 
-            if (value is TimeSpan)
-            {
-                var timeSpan = (TimeSpan)value;
-                seconds = (long)timeSpan.TotalSeconds;
-            }
-            else
-            {
-                throw new JsonSerializationException("Expected TimeSpan object value.");
-            }
-
-            writer.WriteValue(seconds);
+            return false;
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
@@ -56,12 +47,21 @@ namespace Pelykh.Common.Newtonsoft.Json.Converters
             return TimeSpan.FromSeconds(seconds);
         }
 
-        public override bool CanConvert(Type objectType)
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            if (objectType == typeof(TimeSpan) || objectType == typeof(TimeSpan?))
-                return true;
+            long seconds;
 
-            return false;
+            if (value is TimeSpan)
+            {
+                var timeSpan = (TimeSpan)value;
+                seconds = (long)timeSpan.TotalSeconds;
+            }
+            else
+            {
+                throw new JsonSerializationException("Expected TimeSpan object value.");
+            }
+
+            writer.WriteValue(seconds);
         }
     }
 }

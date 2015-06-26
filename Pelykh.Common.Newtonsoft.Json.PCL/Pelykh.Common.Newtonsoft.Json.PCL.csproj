@@ -41,6 +41,7 @@
     <MSBuildCommunityTasksPath>$(ProjectDir)\..\.build</MSBuildCommunityTasksPath>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Converters\DefaultValueFallbackConverter.cs" />
     <Compile Include="Converters\StringAttributedEnumConverter.cs" />
     <Compile Include="Converters\TimeSpanSecondsConverter.cs" />
     <Compile Include="Converters\UnixEpochDateTimeConverter.cs" />

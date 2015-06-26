@@ -16,30 +16,6 @@ namespace Pelykh.Common.Newtonsoft.Json.Converters
             EpochOrigin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
         }
 
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            long seconds;
-
-            if (value is DateTime)
-            {
-                var dateTime = (DateTime)value;
-                var utcDateTime = dateTime.ToUniversalTime();
-                seconds = (long)(utcDateTime - EpochOrigin).TotalSeconds;
-            }
-            else if (value is DateTimeOffset)
-            {
-                var dateTimeOffset = (DateTimeOffset)value;
-                var utcDateTimeOffset = dateTimeOffset.ToUniversalTime();
-                seconds = (long)(utcDateTimeOffset.UtcDateTime - EpochOrigin).TotalSeconds;
-            }
-            else
-            {
-                throw new JsonSerializationException("Expected date object value.");
-            }
-
-            writer.WriteValue(seconds);
-        }
-
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             var underlyingObjectType = objectType.GetNotNullableTypeOrOriginal();
@@ -72,6 +48,30 @@ namespace Pelykh.Common.Newtonsoft.Json.Converters
                 return new DateTimeOffset(dateTime);
 
             return dateTime;
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            long seconds;
+
+            if (value is DateTime)
+            {
+                var dateTime = (DateTime)value;
+                var utcDateTime = dateTime.ToUniversalTime();
+                seconds = (long)(utcDateTime - EpochOrigin).TotalSeconds;
+            }
+            else if (value is DateTimeOffset)
+            {
+                var dateTimeOffset = (DateTimeOffset)value;
+                var utcDateTimeOffset = dateTimeOffset.ToUniversalTime();
+                seconds = (long)(utcDateTimeOffset.UtcDateTime - EpochOrigin).TotalSeconds;
+            }
+            else
+            {
+                throw new JsonSerializationException("Expected date object value.");
+            }
+
+            writer.WriteValue(seconds);
         }
     }
 }
