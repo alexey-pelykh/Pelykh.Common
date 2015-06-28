@@ -42,6 +42,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Converters\DefaultValueFallbackConverter.cs" />
+    <Compile Include="Converters\LooseStringAttributedEnumConverter.cs" />
+    <Compile Include="Converters\StrictStringAttributedEnumConverter.cs" />
     <Compile Include="Converters\StringAttributedEnumConverter.cs" />
     <Compile Include="Converters\TimeSpanSecondsConverter.cs" />
     <Compile Include="Converters\UnixEpochDateTimeConverter.cs" />

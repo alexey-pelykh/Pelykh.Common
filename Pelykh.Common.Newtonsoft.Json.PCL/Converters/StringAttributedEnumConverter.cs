@@ -10,6 +10,13 @@ namespace Pelykh.Common.Newtonsoft.Json.Converters
     /// </summary>
     public class StringAttributedEnumConverter : JsonConverter
     {
+        public bool IsStrict { get; private set; }
+
+        public StringAttributedEnumConverter(bool isStrict = true)
+        {
+            IsStrict = isStrict;
+        }
+
         public override bool CanConvert(Type objectType)
         {
             return objectType.GetNotNullableTypeOrOriginal().IsEnum;
@@ -67,11 +74,18 @@ namespace Pelykh.Common.Newtonsoft.Json.Converters
             catch (Exception e)
             {
                 throw new JsonSerializationException(string.Format(
-                    "Error parsing value {0} as {1}",
+                    "Error parsing value \"{0}\" as {1}",
                     reader.Value,
                     objectType), e);
             }
 
+            if (IsStrict)
+            {
+                throw new JsonSerializationException(string.Format(
+                    "Error parsing value \"{0}\" as {1}",
+                    reader.Value,
+                    objectType));
+            }
             return existingValue;
         }
 
@@ -89,7 +103,7 @@ namespace Pelykh.Common.Newtonsoft.Json.Converters
             if (!underlyingObjectType.IsEnum)
             {
                 throw new JsonSerializationException(string.Format(
-                    "Cannot convert {0} to enum value",
+                    "Cannot convert \"{0}\" to enum value",
                     value));
             }
 
@@ -101,7 +115,7 @@ namespace Pelykh.Common.Newtonsoft.Json.Converters
             if (enumValueAttribute == null)
             {
                 throw new JsonSerializationException(string.Format(
-                    "Cannot convert {0} to enum value",
+                    "Cannot convert \"{0}\" to enum value",
                     value));
             }
 
