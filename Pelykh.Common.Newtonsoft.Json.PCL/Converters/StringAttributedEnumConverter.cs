@@ -10,37 +10,16 @@ namespace Pelykh.Common.Newtonsoft.Json.Converters
     /// </summary>
     public class StringAttributedEnumConverter : JsonConverter
     {
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public bool IsStrict { get; private set; }
+
+        public StringAttributedEnumConverter(bool isStrict = true)
         {
-            if (value == null)
-            {
-                writer.WriteNull();
-                return;
-            }
+            IsStrict = isStrict;
+        }
 
-            var objectType = value.GetType();
-            var underlyingObjectType = objectType.GetNotNullableTypeOrOriginal();
-
-            if (!underlyingObjectType.IsEnum)
-            {
-                throw new JsonSerializationException(string.Format(
-                    "Cannot convert {0} to enum value",
-                    value));
-            }
-
-            var enumValueDeclaration = underlyingObjectType.GetField(value.ToString());
-            var enumValueAttribute = (JsonEnumValueAttribute)enumValueDeclaration
-                .GetCustomAttributes(typeof(JsonEnumValueAttribute), false)
-                .FirstOrDefault();
-
-            if (enumValueAttribute == null)
-            {
-                throw new JsonSerializationException(string.Format(
-                    "Cannot convert {0} to enum value",
-                    value));
-            }
-
-            writer.WriteValue(enumValueAttribute.Value);
+        public override bool CanConvert(Type objectType)
+        {
+            return objectType.GetNotNullableTypeOrOriginal().IsEnum;
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
@@ -66,7 +45,7 @@ namespace Pelykh.Common.Newtonsoft.Json.Converters
 
                 return null;
             }
-            
+
             if (reader.TokenType != JsonToken.String)
             {
                 throw new JsonSerializationException(string.Format(
@@ -79,7 +58,7 @@ namespace Pelykh.Common.Newtonsoft.Json.Converters
             {
                 var jsonValue = reader.Value.ToString();
 
-                foreach (var enumValueDeclaration in underlyingObjectType.GetFields(BindingFlags.Public|BindingFlags.Static))
+                foreach (var enumValueDeclaration in underlyingObjectType.GetFields(BindingFlags.Public | BindingFlags.Static))
                 {
                     var enumValueAttribute = (JsonEnumValueAttribute)enumValueDeclaration
                         .GetCustomAttributes(typeof(JsonEnumValueAttribute), false)
@@ -95,17 +74,52 @@ namespace Pelykh.Common.Newtonsoft.Json.Converters
             catch (Exception e)
             {
                 throw new JsonSerializationException(string.Format(
-                    "Error parsing value {0} as {1}",
+                    "Error parsing value \"{0}\" as {1}",
                     reader.Value,
                     objectType), e);
             }
 
+            if (IsStrict)
+            {
+                throw new JsonSerializationException(string.Format(
+                    "Error parsing value \"{0}\" as {1}",
+                    reader.Value,
+                    objectType));
+            }
             return existingValue;
         }
 
-        public override bool CanConvert(Type objectType)
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            return objectType.GetNotNullableTypeOrOriginal().IsEnum;
+            if (value == null)
+            {
+                writer.WriteNull();
+                return;
+            }
+
+            var objectType = value.GetType();
+            var underlyingObjectType = objectType.GetNotNullableTypeOrOriginal();
+
+            if (!underlyingObjectType.IsEnum)
+            {
+                throw new JsonSerializationException(string.Format(
+                    "Cannot convert \"{0}\" to enum value",
+                    value));
+            }
+
+            var enumValueDeclaration = underlyingObjectType.GetField(value.ToString());
+            var enumValueAttribute = (JsonEnumValueAttribute)enumValueDeclaration
+                .GetCustomAttributes(typeof(JsonEnumValueAttribute), false)
+                .FirstOrDefault();
+
+            if (enumValueAttribute == null)
+            {
+                throw new JsonSerializationException(string.Format(
+                    "Cannot convert \"{0}\" to enum value",
+                    value));
+            }
+
+            writer.WriteValue(enumValueAttribute.Value);
         }
     }
 }
